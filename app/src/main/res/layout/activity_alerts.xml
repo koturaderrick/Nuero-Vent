@@ -6,38 +6,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context=".AlertsActivity">
+    tools:context=".Alerts"
+    >
 
     <!-- Top Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#4CAF50"
+        android:background="@drawable/top_bar_background"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_logo"
-            android:layout_gravity="bottom"
-            android:contentDescription="Logo" />
+            android:layout_width="75dp"
+            android:layout_height="54dp"
+            android:contentDescription="Logo"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo"
+
+            />
+             <!--android:src="@drawable/ic_logo"-->
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_weight="1"
+            android:gravity="bottom"
             android:text="Alerts"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:gravity="center" />
+            android:textSize="25dp" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_menu"
+            android:id="@+id/option_image"
+            android:layout_width="62dp"
+            android:layout_height="37dp"
             android:layout_gravity="bottom"
-            android:contentDescription="@string/menu" />
+            android:contentDescription="@string/option_image"
+            android:scaleType="fitCenter"
+            android:src="@drawable/option_image" />
     </LinearLayout>
 
     <!-- Alert Items -->
@@ -52,7 +58,7 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <!-- Repeat this block for each alert -->
+
             <include layout="@layout/item_alert" />
             <include layout="@layout/item_alert" />
             <include layout="@layout/item_alert" />
@@ -73,38 +79,83 @@
     <!-- Bottom Navigation -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="#4CAF50"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:padding="8dp">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_dashboard"
-            android:layout_margin="12dp"
-            android:contentDescription="@string/dashboard" />
+        <!-- Dashboard -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="8dp">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_alerts"
-            android:layout_margin="12dp"
-            android:contentDescription="@string/alerts" />
+            <ImageView
+                android:id="@+id/home"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:contentDescription="@string/dashboard"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/grey_home" />
+        </LinearLayout>
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_stats"
-            android:layout_margin="12dp"
-            android:contentDescription="@string/stats" />
+        <!-- Alerts -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="8dp">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_control"
-            android:layout_margin="12dp"
-            android:contentDescription="@string/control" />
+            <ImageView
+                android:id="@+id/alerts_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/alerts"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/green_alerts" />
+        </LinearLayout>
+
+        <!-- Stats -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/stats_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/stats"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/stats" />
+        </LinearLayout>
+
+        <!-- Control -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/control_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/control"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/control" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -7,38 +7,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".options">
+    tools:context=".Options">
 
     <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#4CAF50"
+        android:background="@drawable/top_bar_background"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="65dp"
-            android:layout_height="55dp"
-            android:layout_gravity="bottom"
+            android:layout_width="75dp"
+            android:layout_height="54dp"
+            android:layout_gravity="center"
             android:contentDescription="Logo"
-            android:src="@drawable/ic_logo" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo"
+
+            />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="68dp"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="bottom"
             android:text="Menu"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="25dp" />
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="52dp"
+            android:id="@+id/close"
+            android:layout_width="65dp"
+            android:layout_height="44dp"
             android:layout_gravity="bottom"
-            android:contentDescription="@string/menu"
-            android:src="@drawable/ic_menu" />
+            android:contentDescription="@string/close_icon"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_close" />
+
     </LinearLayout>
 
     <!-- Middle content in a scroll view -->
@@ -61,16 +67,18 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:id="@+id/File"
                     android:layout_width="56dp"
                     android:layout_height="49dp"
                     android:layout_gravity="bottom"
-                    android:contentDescription="Logo"
-                    android:src="@drawable/ic_logo" />
+                    android:src="@drawable/file"
+                    android:contentDescription="file" />
+                    <!--android:src="@drawable/ic_logo" -->
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LOGOUT"
+                    android:text="Audit checklist Form"
                     android:layout_marginTop="14dp"
                     android:textSize="16sp"
                     android:layout_marginLeft="15dp"
@@ -85,16 +93,42 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:id="@+id/logout"
                     android:layout_width="56dp"
                     android:layout_height="49dp"
                     android:layout_gravity="bottom"
-                    android:contentDescription="Logo"
-                    android:src="@drawable/ic_logo" />
+                    android:src="@drawable/log_out"
+                    android:contentDescription="Logo" />
+                    <!--android:src="@drawable/ic_logo" -->
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LOGOUT"
+                    android:text="Log Out"
+                    android:layout_marginTop="14dp"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="#000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/tools"
+                    android:layout_width="56dp"
+                    android:layout_height="49dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/tools"
+                    android:contentDescription="Logo" />
+                    <!--android:src="@drawable/ic_logo"-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Request Maintenance"
                     android:layout_marginTop="14dp"
                     android:textSize="16sp"
                     android:layout_marginLeft="15dp"
@@ -110,35 +144,15 @@
                     android:layout_width="56dp"
                     android:layout_height="49dp"
                     android:layout_gravity="bottom"
-                    android:contentDescription="Logo"
-                    android:src="@drawable/ic_logo" />
+                    android:id="@+id/reboot"
+                    android:src="@drawable/reboot"
+                    android:contentDescription="Logo" />
+                    <!--android:src="@drawable/ic_logo" -->
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LOGOUT"
-                    android:layout_marginTop="14dp"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="#000" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="49dp"
-                    android:layout_gravity="bottom"
-                    android:contentDescription="Logo"
-                    android:src="@drawable/ic_logo" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/logout"
+                    android:text="Reboot System"
                     android:layout_marginTop="14dp"
                     android:textSize="16sp"
                     android:layout_marginStart="15dp"
@@ -151,10 +165,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#4CAF50"
+        android:baselineAligned="false"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:gravity="center">
+        android:padding="8dp">
 
         <!-- Dashboard -->
         <LinearLayout
@@ -165,13 +179,13 @@
             android:padding="8dp">
 
             <ImageView
-                android:layout_width="48dp"
+                android:id="@+id/home"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:src="@drawable/ic_dashboard"
                 android:contentDescription="@string/dashboard"
-                android:background="@drawable/circle_bg"
                 android:padding="8dp"
-                android:scaleType="centerInside" />
+                android:scaleType="centerInside"
+                android:src="@drawable/grey_home" />
         </LinearLayout>
 
         <!-- Alerts -->
@@ -183,13 +197,13 @@
             android:padding="8dp">
 
             <ImageView
+                android:id="@+id/alerts_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/circle_bg"
                 android:contentDescription="@string/alerts"
                 android:padding="8dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_alerts" />
+                android:src="@drawable/alert" />
         </LinearLayout>
 
         <!-- Stats -->
@@ -201,13 +215,13 @@
             android:padding="8dp">
 
             <ImageView
+                android:id="@+id/stats_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/ic_stats"
                 android:contentDescription="@string/stats"
-                android:background="@drawable/circle_bg"
                 android:padding="8dp"
-                android:scaleType="centerInside" />
+                android:scaleType="centerInside"
+                android:src="@drawable/stats" />
         </LinearLayout>
 
         <!-- Control -->
@@ -219,13 +233,13 @@
             android:padding="8dp">
 
             <ImageView
+                android:id="@+id/control_icon"
                 android:layout_width="48dp"
-                android:layout_height="49dp"
-                android:background="@drawable/circle_bg"
+                android:layout_height="48dp"
                 android:contentDescription="@string/control"
                 android:padding="8dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_control" />
+                android:src="@drawable/control" />
         </LinearLayout>
     </LinearLayout>
 

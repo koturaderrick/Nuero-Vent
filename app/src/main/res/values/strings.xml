@@ -23,5 +23,7 @@
     <string name="menu">Menu</string>
     <string name="temperature">Temperature</string>
     <string name="logout">LOGOUT</string>
+    <string name="option_image">option_image</string>
+    <string name="close_icon">close_icon</string>
 
 </resources>
