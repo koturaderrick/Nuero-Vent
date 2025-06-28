@@ -22,5 +22,6 @@
     <string name="_2h_ago">2h ago</string>
     <string name="menu">Menu</string>
     <string name="temperature">Temperature</string>
+    <string name="logout">LOGOUT</string>
 
 </resources>
