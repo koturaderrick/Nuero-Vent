@@ -56,29 +56,8 @@
             android:padding="8dp">
 
             <!-- First Graph Block -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temperature Trend"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#333333" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-20°C"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginTop="4dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Temperature Trend"
@@ -230,7 +209,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/home"
@@ -240,6 +220,13 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/grey_home" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Home">
+
+            </TextView>
         </LinearLayout>
 
         <!-- Alerts -->
@@ -248,7 +235,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/alerts_icon"
@@ -258,6 +246,13 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/alert" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Alerts">
+
+            </TextView>
         </LinearLayout>
 
         <!-- Stats -->
@@ -266,7 +261,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/stats_icon"
@@ -276,6 +272,14 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/green_stats" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Stats"
+                android:textColor="#4CAF50">
+
+            </TextView>
         </LinearLayout>
 
         <!-- Control -->
@@ -284,7 +288,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/control_icon"
@@ -294,6 +299,14 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/control" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Control"
+                >
+
+            </TextView>
         </LinearLayout>
     </LinearLayout>
 

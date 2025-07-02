@@ -91,7 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/home"
@@ -101,6 +102,13 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/grey_home" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Home">
+
+            </TextView>
         </LinearLayout>
 
         <!-- Alerts -->
@@ -109,7 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/alerts_icon"
@@ -119,6 +128,14 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/green_alerts" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Alerts"
+                android:textColor="#4CAF50">
+
+            </TextView>
         </LinearLayout>
 
         <!-- Stats -->
@@ -127,7 +144,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/stats_icon"
@@ -137,6 +155,14 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/stats" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Stats"
+                >
+
+            </TextView>
         </LinearLayout>
 
         <!-- Control -->
@@ -145,7 +171,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/control_icon"
@@ -155,6 +182,14 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/control" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Control"
+                >
+
+            </TextView>
         </LinearLayout>
     </LinearLayout>
 

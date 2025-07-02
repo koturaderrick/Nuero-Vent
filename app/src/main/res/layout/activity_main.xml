@@ -86,14 +86,30 @@
                 android:text="@string/login"
                 android:textColor="@android:color/white" />
 
-            <Button
+            <LinearLayout
                 android:id="@+id/googleLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:background="@drawable/rounded_button_white"
                 android:padding="12dp"
+                android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                 android:src="@drawable/google" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/login_with_google"
-                android:textAllCaps="false" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+        </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
