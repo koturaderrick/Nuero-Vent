@@ -22,10 +22,7 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+
 
             <ImageView
                 android:id="@+id/option_image"
@@ -34,7 +31,8 @@
                 android:layout_gravity="bottom"
                 android:contentDescription="@string/option_image"
                 android:scaleType="fitCenter"
-                android:src="@drawable/option_image" />
+                android:src="@drawable/option_image"
+                android:layout_marginStart="350dp"/>
         </LinearLayout>
 
         <!-- NeuroVent Logo Area -->

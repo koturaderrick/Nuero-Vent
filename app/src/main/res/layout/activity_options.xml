@@ -68,8 +68,8 @@
 
                 <ImageView
                     android:id="@+id/File"
-                    android:layout_width="56dp"
-                    android:layout_height="49dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="41dp"
                     android:layout_gravity="bottom"
                     android:src="@drawable/file"
                     android:contentDescription="file" />
@@ -94,8 +94,8 @@
 
                 <ImageView
                     android:id="@+id/logout"
-                    android:layout_width="56dp"
-                    android:layout_height="49dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="41dp"
                     android:layout_gravity="bottom"
                     android:src="@drawable/log_out"
                     android:contentDescription="Logo" />
@@ -118,8 +118,8 @@
 
                 <ImageView
                     android:id="@+id/tools"
-                    android:layout_width="56dp"
-                    android:layout_height="49dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="41dp"
                     android:layout_gravity="bottom"
                     android:src="@drawable/tools"
                     android:contentDescription="Logo" />
@@ -141,8 +141,8 @@
                 android:padding="16dp">
 
                 <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="49dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="41dp"
                     android:layout_gravity="bottom"
                     android:id="@+id/reboot"
                     android:src="@drawable/reboot"
