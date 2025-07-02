@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 
 class Stats : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
