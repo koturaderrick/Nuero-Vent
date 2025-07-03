@@ -90,8 +90,33 @@ class Stats : AppCompatActivity() {
         chart.setNoDataText("No data available")
         chart.description.isEnabled = false
         chart.axisRight.isEnabled = false
-        chart.xAxis.granularity = 1f
+
+        // X Axis setup: bottom, show every 5 hours
+        val xAxis = chart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.labelCount = 6
+        xAxis.setDrawLabels(true)
+        xAxis.valueFormatter = TimeAxisFormatter()
+        xAxis.setLabelCount(6, true)
+
+        // Y Axis setup: set min and max for visible range
+        val leftAxis = chart.axisLeft
+        leftAxis.axisMinimum = yMin
+        leftAxis.axisMaximum = yMax
+
         chart.animateY(1000)
         chart.invalidate()
+    }
+
+    class TimeAxisFormatter : ValueFormatter() {
+        override fun getFormattedValue(value: Float): String {
+            // Show label only every 5 hours (0,5,10,15,20,24)
+            val hour = value.toInt()
+            return when (hour) {
+                0, 5, 10, 15, 20, 24 -> String.format("%02d:00", hour)
+                else -> ""
+            }
+        }
     }
 }
