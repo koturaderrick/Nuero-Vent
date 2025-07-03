@@ -57,7 +57,13 @@
 
             <!-- First Graph Block -->
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Temperature Trend"
@@ -82,114 +88,101 @@
                     android:textColor="#FF0000"
                     android:layout_marginTop="2dp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="278dp"
-                android:layout_marginTop="8dp"
-                android:contentDescription="Graph"
-                android:scaleType="fitCenter"
-                />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChartTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="278dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="Temperature Chart"
+                    android:scaleType="fitCenter" />
+
+
+            </LinearLayout>
+
+
             <!--android:src="@drawable/sample_graph" -->
 
-            <!-- Second Graph Block (Duplicate) -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temperature Trend"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#333333" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-20°C"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginTop="4dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Last 24 Hours   -10%"
-                android:textSize="14sp"
-                android:textColor="#FF0000"
-                android:layout_marginTop="2dp" />
-
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="278dp"
-                android:layout_marginTop="8dp"
-                android:contentDescription="Graph"
-                android:scaleType="fitCenter"
-                />
-            <!--android:src="@drawable/sample_graph" -->
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temperature Trend"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#333333" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature Trend"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#333333" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-20°C"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginTop="4dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-20°C"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginTop="4dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Last 24 Hours   -10%"
-                android:textSize="14sp"
-                android:textColor="#FF0000"
-                android:layout_marginTop="2dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last 24 Hours   -10%"
+                    android:textSize="14sp"
+                    android:textColor="#FF0000"
+                    android:layout_marginTop="2dp" />
 
-            <ImageView
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChartHumidity"
+                    android:layout_width="match_parent"
+                    android:layout_height="278dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="Humidity Chart"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="278dp"
-                android:layout_marginTop="8dp"
-                android:contentDescription="Graph"
-                android:scaleType="fitCenter"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temperature Trend"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#333333" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-20°C"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginTop="4dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature Trend"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#333333" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Last 24 Hours   -10%"
-                android:textSize="14sp"
-                android:textColor="#FF0000"
-                android:layout_marginTop="2dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-20°C"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginTop="4dp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="278dp"
-                android:layout_marginTop="8dp"
-                android:contentDescription="Graph"
-                android:scaleType="fitCenter"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last 24 Hours   -10%"
+                    android:textSize="14sp"
+                    android:textColor="#FF0000"
+                    android:layout_marginTop="2dp" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChartPressure"
+                    android:layout_width="match_parent"
+                    android:layout_height="278dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="Pressure Chart"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </ScrollView>
