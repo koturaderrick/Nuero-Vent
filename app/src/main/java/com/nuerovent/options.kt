@@ -14,7 +14,7 @@ class Options : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_options)
 
-        // Close button – returns to previous screen
+        // returns to previous screen
         findViewById<ImageView>(R.id.close).setOnClickListener {
             finish()
         }

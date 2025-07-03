@@ -6,67 +6,63 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 
 class Stats : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats)
 
-        // Temperature
-        val tempChart = findViewById<LineChart>(R.id.lineChartTemp)
+        // Example data points spread over 24 hours with 5-hour increments on x-axis
         val tempEntries = listOf(
             Entry(0f, 22f),
-            Entry(1f, 24f),
-            Entry(2f, 21f),
-            Entry(3f, 23f),
-            Entry(4f, 25f)
+            Entry(5f, 24f),
+            Entry(10f, 18f),
+            Entry(15f, 23f),
+            Entry(20f, 25f),
+            Entry(24f, 22f)
         )
-        setupChart(tempChart, tempEntries, "Temperature (°C)")
-
-        // Humidity
-        val humidityChart = findViewById<LineChart>(R.id.lineChartHumidity)
         val humidityEntries = listOf(
             Entry(0f, 60f),
-            Entry(1f, 58f),
-            Entry(2f, 62f),
-            Entry(3f, 65f),
-            Entry(4f, 63f)
+            Entry(5f, 58f),
+            Entry(10f, 62f),
+            Entry(15f, 80f),
+            Entry(20f, 63f),
+            Entry(24f, 60f)
         )
-        setupChart(humidityChart, humidityEntries, "Humidity (%)")
-
-        // Pressure
-        val pressureChart = findViewById<LineChart>(R.id.lineChartPressure)
         val pressureEntries = listOf(
             Entry(0f, 1012f),
-            Entry(1f, 1013f),
-            Entry(2f, 1011f),
-            Entry(3f, 1014f),
-            Entry(4f, 1010f)
+            Entry(5f, 1013f),
+            Entry(10f, 1011f),
+            Entry(15f, 1014f),
+            Entry(20f, 1010f),
+            Entry(24f, 1012f)
         )
-        setupChart(pressureChart, pressureEntries, "Pressure (hPa)")
+
+        setupChart(findViewById(R.id.lineChartTemp), tempEntries, "Temperature (°C)", Color.RED, 15f, 30f)
+        setupChart(findViewById(R.id.lineChartHumidity), humidityEntries, "Humidity (%)", Color.BLUE, 40f, 80f)
+        setupChart(findViewById(R.id.lineChartPressure), pressureEntries, "Pressure (hPa)", Color.MAGENTA, 1005f, 1020f)
 
         // Navigation setup
         findViewById<ImageView>(R.id.home).setOnClickListener {
             startActivity(Intent(this, Home::class.java))
             finish()
         }
-
         findViewById<ImageView>(R.id.alerts_icon).setOnClickListener {
             startActivity(Intent(this, Alerts::class.java))
             finish()
         }
-
         findViewById<ImageView>(R.id.stats_icon).setOnClickListener {
             // already here
         }
-
         findViewById<ImageView>(R.id.option_image).setOnClickListener {
             startActivity(Intent(this, Options::class.java))
         }
-
         findViewById<ImageView>(R.id.control_icon).setOnClickListener {
             startActivity(Intent(this, Control::class.java))
             finish()

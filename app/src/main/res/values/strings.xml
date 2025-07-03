@@ -9,7 +9,7 @@
     <string name="fan_icon">Fan Icon</string>
     <string name="todo">todo</string>
     <string name="alerts">Alerts</string>
-    <string name="stats">STATS</string>
+    <string name="stats_word">STATS</string>
     <string name="control">Control</string>
     <string name="dashboard">Dashboard</string>
     <string name="condition_stable">Condition stable</string>
