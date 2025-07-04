@@ -10,17 +10,17 @@
     <!-- Main content wrapper -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
         android:orientation="vertical">
 
         <!-- Top Bar -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:background="@drawable/top_bar_background"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingHorizontal="12dp">
 
             <!-- Spacer pushes content to the right -->
@@ -33,16 +33,16 @@
                 android:id="@+id/option_image"
                 android:layout_width="62dp"
                 android:layout_height="37dp"
+                android:layout_gravity="bottom"
                 android:contentDescription="@string/option_image"
                 android:scaleType="fitCenter"
-                android:layout_gravity="bottom"
                 android:src="@drawable/option_image" />
         </LinearLayout>
 
         <!-- NeuroVent Logo Area -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="256dp"
+            android:layout_height="209dp"
             android:layout_gravity="center"
             android:layout_margin="12dp"
             android:background="@drawable/rounded_edittext"
@@ -61,8 +61,8 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="238dp"
-                android:layout_height="185dp"
+                android:layout_width="wrap_content"
+                android:layout_height="135dp"
                 android:contentDescription="@string/fan_icon"
                 android:scaleType="fitCenter"
                 android:src="@drawable/logo" />
@@ -117,7 +117,7 @@
                             android:layout_weight="1"
                             android:text="15.78°C"
                             android:textColor="#4CAF50"
-                            android:textSize="22sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <ImageView
@@ -177,7 +177,7 @@
                             android:layout_weight="1"
                             android:text="15.78°C"
                             android:textColor="#4CAF50"
-                            android:textSize="22sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <ImageView
@@ -205,7 +205,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="161dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -244,7 +244,7 @@
                             android:layout_weight="1"
                             android:text="15.78°C"
                             android:textColor="#4CAF50"
-                            android:textSize="22sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <ImageView
@@ -304,7 +304,7 @@
                             android:layout_weight="1"
                             android:text="15.78°C"
                             android:textColor="#4CAF50"
-                            android:textSize="22sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <ImageView
@@ -336,7 +336,7 @@
     <!-- Bottom Navigation -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="111dp"
         android:baselineAligned="false"
         android:gravity="center"
         android:orientation="horizontal"
@@ -348,8 +348,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/home"
@@ -359,12 +359,13 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/home" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="Home"
-                android:textColor="#4CAF50">
+                android:textColor="#4CAF50"
+                android:textStyle="bold">
 
             </TextView>
         </LinearLayout>
@@ -375,8 +376,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/alerts_icon"
@@ -386,11 +387,12 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/alert" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="Alerts">
+                android:text="Alerts"
+                android:textStyle="bold">
 
             </TextView>
         </LinearLayout>
@@ -401,8 +403,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/stats_icon"
@@ -412,12 +414,12 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/stats" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="Stats"
-                >
+                android:textStyle="bold">
 
             </TextView>
         </LinearLayout>
@@ -428,8 +430,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/control_icon"
@@ -439,12 +441,12 @@
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/control" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="Control"
-                >
+                android:textStyle="bold">
 
             </TextView>
         </LinearLayout>

@@ -11,7 +11,7 @@ import android.content.Intent
 class Control : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContentView(R.layout.activity_control)
 
         findViewById<ImageView>(R.id.home).setOnClickListener {

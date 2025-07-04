@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 class Options : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContentView(R.layout.activity_options)
 
         // returns to previous screen
