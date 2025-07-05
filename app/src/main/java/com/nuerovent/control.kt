@@ -38,11 +38,6 @@ class Control : AppCompatActivity() {
             startActivity(Intent(this, Options::class.java))
         }
 
-        // Drop-down logic
-        setupDropdown(R.id.temp_dropdown_container, R.id.temp_arrow)
-        setupDropdown(R.id.humidity_dropdown_container, R.id.humidity_arrow)
-        setupDropdown(R.id.pressure_dropdown_container, R.id.pressure_arrow)
-        setupDropdown(R.id.air_dropdown_container, R.id.air_arrow)
     }
 
     private fun setupDropdown(containerId: Int, arrowId: Int) {
