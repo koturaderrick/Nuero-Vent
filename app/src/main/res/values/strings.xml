@@ -32,5 +32,9 @@
     <string name="pressure">Pressure</string>
     <string name="logo">Logo</string>
     <string name="options">Options</string>
+    <string name="unstable_pressure">Unstable Pressure</string>
+    <string name="pressure_fluctuations_detected">Pressure fluctuations detected</string>
+    <string name="_4h_ago">4h_ago</string>
+    <string name="icon">Icon</string>
 
 </resources>

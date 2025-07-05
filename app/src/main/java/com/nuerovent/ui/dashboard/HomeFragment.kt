@@ -8,14 +8,12 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nuerovent.R
 import com.nuerovent.databinding.FragmentHomeBinding
 import com.nuerovent.model.HomeItem
-import com.nuerovent.model.OnItemClick
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient

@@ -1,5 +1,6 @@
 package com.nuerovent.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -111,6 +112,7 @@ class StatsFragment : Fragment() {
     }
 
     class TimeAxisFormatter : ValueFormatter() {
+        @SuppressLint("DefaultLocale")
         override fun getFormattedValue(value: Float): String {
             // Show label only every 5 hours (0,5,10,15,20,24)
             val hour = value.toInt()

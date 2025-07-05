@@ -3,9 +3,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nuerovent.databinding.LayoutAlertBinding
-import com.nuerovent.databinding.LayoutHomeItemBinding
-import com.nuerovent.model.HomeItem
-import com.nuerovent.model.OnItemClick
 
 class AlertAdapter(private val items: List<String>) :
     RecyclerView.Adapter<AlertAdapter.ItemViewHolder>() {
