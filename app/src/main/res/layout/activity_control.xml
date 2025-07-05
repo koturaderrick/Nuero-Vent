@@ -61,222 +61,339 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="56dp"
                 android:orientation="horizontal"
-                android:padding="12dp"
+                android:paddingVertical="8dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="12dp"
-                    android:src="@drawable/new_temp"
-                    android:contentDescription="Icon" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/overheating"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/temperature_exceeded_threshold"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
-                </LinearLayout>
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/inductorFanLabel"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/_2h_ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
+                    android:layout_weight="1"
+                    android:text="Inductor Fan"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <Switch
+                    android:id="@+id/inductorFanSwitch_on_and_off"
+                    android:layout_width="52dp"
+                    android:layout_height="32dp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:id="@+id/Extractor_Fan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Extractor Fan"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <Switch
+                    android:id="@+id/Extractor_Fan_on_and_off"
+                    android:layout_width="52dp"
+                    android:layout_height="32dp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:id="@+id/Humidifier"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Humidifier"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <Switch
+                    android:id="@+id/Humidifier_on_and_off"
+                    android:layout_width="52dp"
+                    android:layout_height="32dp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:id="@+id/Heating_Unit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Heating Unit"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <Switch
+                    android:id="@+id/Heating_Unit_on_and_off"
+                    android:layout_width="52dp"
+                    android:layout_height="32dp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="56dp"
                 android:orientation="horizontal"
-                android:padding="12dp"
+                android:paddingVertical="8dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/new_pressure"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/Cooling_Unit_Mode"
+                        android:layout_width="314dp"
                         android:layout_height="wrap_content"
-                        android:text="Unstable Pressure"
-                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:text="Cooling Unit Mode"
+                        android:textColor="#000000"
                         android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pressure fluctuations detected"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
-                </LinearLayout>
+                        android:text="Auto"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4h_ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
+                <Switch
+                    android:id="@+id/Cooling_Unit_Mode_on_and_of"
+                    android:layout_width="52dp"
+                    android:layout_height="32dp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
             </LinearLayout>
+
+            <!-- what i have requested goes here-->
+
+            <!-- Default Condition Settings Section -->
+
+            <!-- Section Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Default Conditions"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:textColor="#000000" />
+
+            <!-- Target Temperature -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/new_humidity"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Low Humidity"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:text="Target Temperature"
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Humidity levels below optimal range"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
+                        android:text="22°C"
+                        android:textColor="#888888"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_2h_ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
+                    android:src="@android:drawable/ic_menu_more"
+                    android:contentDescription="More" >
+
+
+
+                </ImageView>
             </LinearLayout>
+
+            <!-- Target Humidity -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ventilation"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ventilation Failure"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:text="Target Humidity"
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ventilation system malfunction"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
+                        android:text="50%"
+                        android:textColor="#888888"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10h ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
+                    android:src="@android:drawable/ic_menu_more"
+                    android:contentDescription="More" />
             </LinearLayout>
+
+            <!-- Target Pressure -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/power"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="Icon" />
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/overheating"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:text="Target Pressure"
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/temperature_exceeded_threshold"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
+                        android:text="Neutral"
+                        android:textColor="#888888"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_2h_ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
+                    android:src="@android:drawable/ic_menu_more"
+                    android:contentDescription="More" />
             </LinearLayout>
+
+            <!-- Air Quality Threshold -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Air Quality Threshold"
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Low"
+                        android:textColor="#888888"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_more"
+                    android:contentDescription="More" />
+            </LinearLayout>
+
+            <!-- System Management Header -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="System Management"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp"
+                android:textColor="#000000" />
+
+            <!-- Reset All Conditions to Default -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Reset All Conditions to Default"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_more"
+                    android:contentDescription="More" />
+            </LinearLayout>
+
+
+
 
 
         </LinearLayout>

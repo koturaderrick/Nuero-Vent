@@ -70,10 +70,9 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-
                     android:layout_marginEnd="12dp"
+                    android:src="@drawable/new_temp"
                     android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -92,6 +91,95 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/temperature_exceeded_threshold"
+                        android:textSize="14sp"
+                        android:textColor="#4CAF50" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_2h_ago"
+                    android:textSize="12sp"
+                    android:textColor="#4CAF50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/new_pressure"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="Icon" />
+                <!--android:src="@drawable/ic_temp"-->
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unstable Pressure"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pressure fluctuations detected"
+                        android:textSize="14sp"
+                        android:textColor="#4CAF50" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4h_ago"
+                    android:textSize="12sp"
+                    android:textColor="#4CAF50" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/new_humidity"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="Icon" />
+                <!--android:src="@drawable/ic_temp"-->
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Low Humidity"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Humidity levels below optimal range"
                         android:textSize="14sp"
                         android:textColor="#4CAF50" />
                 </LinearLayout>
@@ -114,7 +202,7 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-
+                    android:src="@drawable/ventilation"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="Icon" />
                 <!--android:src="@drawable/ic_temp"-->
@@ -128,14 +216,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/overheating"
+                        android:text="Ventilation Failure"
                         android:textStyle="bold"
                         android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/temperature_exceeded_threshold"
+                        android:text="Ventilation system malfunction"
                         android:textSize="14sp"
                         android:textColor="#4CAF50" />
                 </LinearLayout>
@@ -143,7 +231,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_2h_ago"
+                    android:text="10h ago"
                     android:textSize="12sp"
                     android:textColor="#4CAF50" />
             </LinearLayout>
@@ -158,10 +246,9 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-
+                    android:src="@drawable/power"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -191,138 +278,7 @@
                     android:textSize="12sp"
                     android:textColor="#4CAF50" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/overheating"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/temperature_exceeded_threshold"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/_2h_ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/overheating"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/temperature_exceeded_threshold"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/_2h_ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="4dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="Icon" />
-                <!--android:src="@drawable/ic_temp"-->
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/overheating"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/temperature_exceeded_threshold"
-                        android:textSize="14sp"
-                        android:textColor="#4CAF50" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/_2h_ago"
-                    android:textSize="12sp"
-                    android:textColor="#4CAF50" />
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -20,7 +20,6 @@ class Stats : AppCompatActivity() {
         setContentView(R.layout.activity_stats)
 
 
-        // Example data points spread over 24 hours with 5-hour increments on x-axis
         val tempEntries = listOf(
             Entry(0f, 22f),
             Entry(5f, 24f),
