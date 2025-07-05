@@ -1,44 +1,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:orientation="horizontal"
-    android:padding="12dp"
+    android:layout_marginBottom="4dp"
     android:gravity="center_vertical"
-    android:layout_marginBottom="4dp">
+    android:orientation="horizontal"
+    android:padding="12dp">
 
     <ImageView
         android:layout_width="32dp"
         android:layout_height="32dp"
-
         android:layout_marginEnd="12dp"
-        android:contentDescription="Icon" />
+        android:contentDescription="Icon"
+        android:src="@drawable/new_pressure" />
     <!--android:src="@drawable/ic_temp"-->
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/overheating"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+            android:text="Unstable Pressure"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/temperature_exceeded_threshold"
-            android:textSize="14sp"
-            android:textColor="#888888" />
+            android:text="Pressure fluctuations detected"
+            android:textColor="#4CAF50"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/_2h_ago"
-        android:textSize="12sp"
-        android:textColor="#888888" />
+        android:text="4h_ago"
+        android:textColor="#4CAF50"
+        android:textSize="12sp" />
 </LinearLayout>

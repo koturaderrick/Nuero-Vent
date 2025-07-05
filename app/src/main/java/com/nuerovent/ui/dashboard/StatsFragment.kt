@@ -1,25 +1,34 @@
-package com.nuerovent
+package com.nuerovent.ui.dashboard
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.nuerovent.databinding.FragmentStatsBinding
 
-class Stats : AppCompatActivity() {
+class StatsFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stats)
+    private lateinit var binding: FragmentStatsBinding
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
+        binding = FragmentStatsBinding.inflate(layoutInflater)
+        initViews()
+        return binding.root
+    }
+
+    private fun initViews() {
         val tempEntries = listOf(
             Entry(0f, 22f),
             Entry(5f, 24f),
@@ -45,32 +54,27 @@ class Stats : AppCompatActivity() {
             Entry(24f, 1012f)
         )
 
-        setupChart(findViewById(R.id.lineChartTemp), tempEntries, "Temperature (°C)", Color.RED, 15f, 30f)
-        setupChart(findViewById(R.id.lineChartHumidity), humidityEntries, "Humidity (%)", Color.BLUE, 40f, 80f)
-        setupChart(findViewById(R.id.lineChartPressure), pressureEntries, "Pressure (hPa)", Color.MAGENTA, 1005f, 1020f)
+        setupChart(binding.lineChartTemp, tempEntries, "Temperature (°C)", Color.RED, 15f, 30f)
+        setupChart(binding.lineChartHumidity, humidityEntries, "Humidity (%)", Color.BLUE, 40f, 80f)
+        setupChart(
+            binding.lineChartPressure,
+            pressureEntries,
+            "Pressure (hPa)",
+            Color.MAGENTA,
+            1005f,
+            1020f
+        )
 
-        // Navigation setup
-        findViewById<ImageView>(R.id.home).setOnClickListener {
-            startActivity(Intent(this, Home::class.java))
-            finish()
-        }
-        findViewById<ImageView>(R.id.alerts_icon).setOnClickListener {
-            startActivity(Intent(this, Alerts::class.java))
-            finish()
-        }
-        findViewById<ImageView>(R.id.stats_icon).setOnClickListener {
-            // already here
-        }
-        findViewById<ImageView>(R.id.option_image).setOnClickListener {
-            startActivity(Intent(this, Options::class.java))
-        }
-        findViewById<ImageView>(R.id.control_icon).setOnClickListener {
-            startActivity(Intent(this, Control::class.java))
-            finish()
-        }
     }
 
-    private fun setupChart(chart: LineChart, entries: List<Entry>, label: String, color: Int, yMin: Float, yMax: Float) {
+    private fun setupChart(
+        chart: LineChart,
+        entries: List<Entry>,
+        label: String,
+        color: Int,
+        yMin: Float,
+        yMax: Float
+    ) {
         val dataSet = LineDataSet(entries, label).apply {
             this.color = color
             valueTextColor = Color.BLACK
@@ -115,5 +119,12 @@ class Stats : AppCompatActivity() {
                 else -> ""
             }
         }
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance() =
+            StatsFragment().apply {}
     }
 }

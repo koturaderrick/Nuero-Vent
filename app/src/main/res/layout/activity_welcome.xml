@@ -6,22 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Green"
-    android:orientation="vertical"
     android:gravity="center"
-    tools:context=".WelcomeActivity">
+    android:orientation="vertical"
+    tools:context=".ui.auth.WelcomeActivity">
 
     <ImageView
-        android:layout_width="411dp"
-        android:layout_height="262dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:layout_gravity="center"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/todo"
-        android:src="@drawable/logo"
-
-        />
-
-
-
-
-
+        android:src="@drawable/logo" />
 
 </LinearLayout>
