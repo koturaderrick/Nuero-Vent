@@ -14,11 +14,14 @@ import com.nuerovent.adapter.DefaultConditionAdapter
 import com.nuerovent.databinding.FragmentControlBinding
 import com.nuerovent.model.ControlItem
 import com.nuerovent.model.DefaultConditionItem
+import okhttp3.*
+import java.io.IOException
 
 class ControlFragment : Fragment() {
 
     private lateinit var binding: FragmentControlBinding
     private lateinit var adapter: ControlAdapter
+    private val client = OkHttpClient()
 
     // Control items for first RecyclerView
     private val controlItems = mutableListOf(
@@ -52,7 +55,13 @@ class ControlFragment : Fragment() {
         // Setup first RecyclerView (controls)
         adapter = ControlAdapter(controlItems) { position, isChecked ->
             controlItems[position].isChecked = isChecked
-            // Add logic on switch toggle if needed
+
+            // If the control is one of the fans, send the toggle command to ESP
+            when (controlItems[position].label) {
+                "Inductor Fan" -> toggleFan(isChecked)
+                "Extractor Fan" -> toggleFan(isChecked)
+                // Add more controls here if you wire more relays
+            }
         }
         binding.controlRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.controlRecyclerView.adapter = adapter
@@ -82,9 +91,8 @@ class ControlFragment : Fragment() {
             .setPositiveButton("Save") { dialog, _ ->
                 val newValue = input.text.toString().trim()
                 if (newValue.isNotEmpty()) {
-                    // Update the item with new value + unit
-                    defaultConditions[position] = DefaultConditionItem(defaultConditions[position].title, "$newValue$unit")
-                    // Notify adapter to refresh that item
+                    defaultConditions[position] =
+                        DefaultConditionItem(defaultConditions[position].title, "$newValue$unit")
                     binding.defaultConditionRecyclerView.adapter?.notifyItemChanged(position)
                 }
                 dialog.dismiss()
@@ -93,9 +101,25 @@ class ControlFragment : Fragment() {
             .show()
     }
 
+    private fun toggleFan(turnOn: Boolean) {
+        val espIp = "192.168.4.1"  //
+        val url = "http://$espIp/fan?state=${if (turnOn) "on" else "off"}"
+
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                // Optionally handle failure (e.g., show a toast)
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.close()
+            }
+        })
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = ControlFragment()
     }
-
 }

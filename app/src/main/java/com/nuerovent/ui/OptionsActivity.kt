@@ -1,6 +1,7 @@
 package com.nuerovent.ui
 
 import android.os.Bundle
+import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.nuerovent.R
 import com.nuerovent.databinding.ActivityOptionsBinding
+import com.nuerovent.ui.audit.AuditActivity // ✅ Import your AuditActivity
 
 class Options : AppCompatActivity() {
 
@@ -43,13 +45,25 @@ class Options : AppCompatActivity() {
 
             itemView.setOnClickListener {
                 when (index) {
-                    0 -> { /* Handle Audit checklist Form */ }
-                    1 -> { /* Handle Log Out */ }
-                    2 -> { /* Handle Maintenance */ }
-                    3 -> { /* Handle Reboot */ }
+                    0 -> {
+                        // ✅ Launch AuditActivity
+                        val intent = Intent(this, AuditActivity::class.java)
+                        startActivity(intent)
+                    }
+                    1 -> {
+                        val intent = Intent(this, com.nuerovent.ui.auth.MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                    2 -> {
+                        // TODO: Handle Maintenance
+                    }
+                    3 -> {
+                        // TODO: Handle Reboot
+                    }
                 }
             }
         }
     }
-
 }

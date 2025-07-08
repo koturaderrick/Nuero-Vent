@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- INTERNET permission -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,28 +16,26 @@
         android:theme="@style/Theme.NueroVent"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.DashboardActivity"
-            android:exported="false" />
 
+        <!-- Remove this line below because item_audit_row is not an activity -->
+        <!-- <activity android:name=".item_audit_row" android:exported="false" /> -->
+
+        <!-- Correct AuditActivity declaration with full package -->
+        <activity android:name=".ui.audit.AuditActivity" android:exported="false" />
+
+        <activity android:name=".ui.DashboardActivity" android:exported="false" />
         <activity
             android:name=".ui.auth.MainActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-
-        <activity
-            android:name=".ui.Options"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.auth.WelcomeActivity"
-            android:exported="true">
+        <activity android:name=".ui.Options" android:exported="false" />
+        <activity android:name=".ui.auth.WelcomeActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

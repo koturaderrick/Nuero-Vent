@@ -18,7 +18,7 @@ class ControlAdapter(
             binding.controlSubText.text = item.subText
             binding.controlSwitch.isChecked = item.isChecked
 
-            // Listen for switch toggle
+            // switch
             binding.controlSwitch.setOnCheckedChangeListener { _, isChecked ->
                 onToggle(adapterPosition, isChecked)
             }

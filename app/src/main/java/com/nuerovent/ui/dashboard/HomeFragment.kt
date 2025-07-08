@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var itemViewAdapter: ItemAdapter
     private val handler = Handler(Looper.getMainLooper())
+    private var auditStarted = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +67,11 @@ class HomeFragment : Fragment() {
                 handler.postDelayed(this, 3000)
             }
         })
+
+        if (!auditStarted) {
+            statsViewModel.startAuditTimer()
+            auditStarted = true
+        }
     }
 
     private fun fetchSensorData() {
@@ -76,7 +82,11 @@ class HomeFragment : Fragment() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 updateWithError()
-                handler.post { alertViewModel.clearAlerts() }
+                handler.post {
+                    if (isAdded) {
+                        alertViewModel.clearAlerts()
+                    }
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -95,83 +105,82 @@ class HomeFragment : Fragment() {
 
                     val alerts = mutableListOf<Alert>()
 
-                    if (temp >= 0) {
-                        val timestamp = (System.currentTimeMillis() / 1000f) % 86400
-                        statsViewModel.addTemperatureEntry(timestamp, temp.toFloat())
+                    val timestamp = (System.currentTimeMillis() / 1000f) % 86400
 
+                    if (temp >= 0) {
+                        statsViewModel.addTemperatureEntry(timestamp, temp.toFloat())
                         if (temp > TEMP_HIGH) {
-                            alerts.add(
-                                Alert(R.drawable.new_temp, "Temperature Too High",
-                                    "Current temperature: $temp°C exceeds $TEMP_HIGH°C", "Just now")
-                            )
+                            alerts.add(Alert(R.drawable.new_temp, "Temperature Too High",
+                                "Current temperature: $temp°C exceeds $TEMP_HIGH°C", "Just now"))
                         } else if (temp < TEMP_LOW) {
-                            alerts.add(
-                                Alert(R.drawable.new_temp, "Temperature Too Low",
-                                    "Current temperature: $temp°C below $TEMP_LOW°C", "Just now")
-                            )
+                            alerts.add(Alert(R.drawable.new_temp, "Temperature Too Low",
+                                "Current temperature: $temp°C below $TEMP_LOW°C", "Just now"))
                         }
                     }
 
                     if (hum >= 0) {
-                        val timestamp = (System.currentTimeMillis() / 1000f) % 86400
                         statsViewModel.addHumidityEntry(timestamp, hum.toFloat())
-
                         if (hum > HUMIDITY_HIGH) {
-                            alerts.add(
-                                Alert(R.drawable.new_humidity, "Humidity Too High",
-                                    "Current humidity: $hum% exceeds $HUMIDITY_HIGH%", "Just now")
-                            )
+                            alerts.add(Alert(R.drawable.new_humidity, "Humidity Too High",
+                                "Current humidity: $hum% exceeds $HUMIDITY_HIGH%", "Just now"))
                         } else if (hum < HUMIDITY_LOW) {
-                            alerts.add(
-                                Alert(R.drawable.new_humidity, "Humidity Too Low",
-                                    "Current humidity: $hum% below $HUMIDITY_LOW%", "Just now")
-                            )
+                            alerts.add(Alert(R.drawable.new_humidity, "Humidity Too Low",
+                                "Current humidity: $hum% below $HUMIDITY_LOW%", "Just now"))
                         }
                     }
 
                     if (pres >= 0) {
-                        val timestamp = (System.currentTimeMillis() / 1000f) % 86400
                         statsViewModel.addPressureEntry(timestamp, pres.toFloat())
-
                         if (pres > PRESSURE_HIGH) {
-                            alerts.add(
-                                Alert(R.drawable.new_pressure, "Pressure Too High",
-                                    "Current pressure: $pres hPa exceeds $PRESSURE_HIGH hPa", "Just now")
-                            )
+                            alerts.add(Alert(R.drawable.new_pressure, "Pressure Too High",
+                                "Current pressure: $pres hPa exceeds $PRESSURE_HIGH hPa", "Just now"))
                         } else if (pres < PRESSURE_LOW) {
-                            alerts.add(
-                                Alert(R.drawable.new_pressure, "Pressure Too Low",
-                                    "Current pressure: $pres hPa below $PRESSURE_LOW hPa", "Just now")
-                            )
+                            alerts.add(Alert(R.drawable.new_pressure, "Pressure Too Low",
+                                "Current pressure: $pres hPa below $PRESSURE_LOW hPa", "Just now"))
                         }
                     }
 
-                    if (airQ >= 0 && airQ > AIR_QUALITY_HIGH) {
-                        alerts.add(
-                            Alert(R.drawable.new_humidity, "Poor Air Quality",
-                                "Air Quality Index: $airQ exceeds $AIR_QUALITY_HIGH", "Just now")
+                    if (airQ >= 0) {
+                        statsViewModel.updateAirQuality(airQ.toFloat())
+                        if (airQ > AIR_QUALITY_HIGH) {
+                            alerts.add(Alert(R.drawable.new_humidity, "Poor Air Quality",
+                                "Air Quality Index: $airQ exceeds $AIR_QUALITY_HIGH", "Just now"))
+                        }
+                    }
+
+                    if (temp >= 0 && hum >= 0 && pres >= 0 && airQ >= 0) {
+                        statsViewModel.addAuditSample(
+                            temp.toFloat(),
+                            hum.toFloat(),
+                            pres.toFloat(),
+                            airQ.toFloat()
                         )
-                    }
-
-                    for (alert in alerts) {
-                        handler.post {
-                            alertViewModel.addAlertWithTimeout(alert)
-                        }
                     }
 
                     handler.post {
-                        itemViewAdapter.setDataList(
-                            listOf(
-                                HomeItem(R.string.temperature, temperatureStr, R.drawable.temp_image),
-                                HomeItem(R.string.humidity, humidityStr, R.drawable.ic_humidity),
-                                HomeItem(R.string.pressure, pressureStr, R.drawable.ic_pressure),
-                                HomeItem(R.string.air_quality, airQualityStr, R.drawable.ic_air_quality)
+                        if (isAdded) {
+                            alertViewModel.clearAlerts()
+                            for (alert in alerts) {
+                                alertViewModel.addAlertWithTimeout(alert)
+                            }
+
+                            itemViewAdapter.setDataList(
+                                listOf(
+                                    HomeItem(R.string.temperature, temperatureStr, R.drawable.temp_image),
+                                    HomeItem(R.string.humidity, humidityStr, R.drawable.ic_humidity),
+                                    HomeItem(R.string.pressure, pressureStr, R.drawable.ic_pressure),
+                                    HomeItem(R.string.air_quality, airQualityStr, R.drawable.ic_air_quality)
+                                )
                             )
-                        )
+                        }
                     }
                 } catch (e: Exception) {
                     updateWithError()
-                    handler.post { alertViewModel.clearAlerts() }
+                    handler.post {
+                        if (isAdded) {
+                            alertViewModel.clearAlerts()
+                        }
+                    }
                 }
             }
         })
@@ -179,14 +188,16 @@ class HomeFragment : Fragment() {
 
     private fun updateWithError() {
         handler.post {
-            itemViewAdapter.setDataList(
-                listOf(
-                    HomeItem(R.string.temperature, "--°C", R.drawable.temp_image),
-                    HomeItem(R.string.humidity, "--%", R.drawable.ic_humidity),
-                    HomeItem(R.string.pressure, "-- hPa", R.drawable.ic_pressure),
-                    HomeItem(R.string.air_quality, "-- AQI", R.drawable.ic_air_quality)
+            if (isAdded) {
+                itemViewAdapter.setDataList(
+                    listOf(
+                        HomeItem(R.string.temperature, "--°C", R.drawable.temp_image),
+                        HomeItem(R.string.humidity, "--%", R.drawable.ic_humidity),
+                        HomeItem(R.string.pressure, "-- hPa", R.drawable.ic_pressure),
+                        HomeItem(R.string.air_quality, "-- AQI", R.drawable.ic_air_quality)
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -195,7 +206,8 @@ class HomeFragment : Fragment() {
         private val spacing = 40
         override fun getItemOffsets(
             outRect: Rect, view: View,
-            parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State
+            parent: androidx.recyclerview.widget.RecyclerView,
+            state: androidx.recyclerview.widget.RecyclerView.State
         ) {
             val position = parent.getChildAdapterPosition(view)
             val column = position % spanCount
