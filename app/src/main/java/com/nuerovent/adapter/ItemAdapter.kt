@@ -5,8 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nuerovent.databinding.LayoutHomeItemBinding
 import com.nuerovent.model.HomeItem
 
-class ItemAdapter() :
-    RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter() : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     private var items: List<HomeItem> = listOf()
 
@@ -28,10 +27,13 @@ class ItemAdapter() :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val data = items[position]
         with(holder.binding) {
-            title.text = data.label
+            // Convert label resource ID (Int) to actual string:
+            title.text = holder.itemView.context.getString(data.label)
             textTemperature.text = data.reading
+            icon.setImageResource(data.imageResId)
         }
     }
+
 
     override fun getItemCount(): Int = items.size
 }

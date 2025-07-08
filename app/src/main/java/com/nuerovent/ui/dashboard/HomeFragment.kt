@@ -1,164 +1,222 @@
 package com.nuerovent.ui.dashboard
 
 import ItemAdapter
+import com.nuerovent.model.StatsViewModel
 import android.graphics.Rect
 import android.os.Bundle
+import com.nuerovent.model.AlertViewModel
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.nuerovent.R
 import com.nuerovent.databinding.FragmentHomeBinding
+import com.nuerovent.model.Alert
 import com.nuerovent.model.HomeItem
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-
     private val client = OkHttpClient()
+
+    private val statsViewModel: StatsViewModel by activityViewModels()
+    private val alertViewModel: AlertViewModel by activityViewModels()
+
     private lateinit var itemViewAdapter: ItemAdapter
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
-
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater)
         binding.initViews()
         return binding.root
     }
 
     private fun FragmentHomeBinding.initViews() {
         itemViewAdapter = ItemAdapter()
-
-        with(recyclerView) {
-            layoutManager = GridLayoutManager(requireContext(), 2)
-            isNestedScrollingEnabled = false
-            adapter = itemViewAdapter
-
-            addItemDecoration(GridSpacingItemDecoration(2))
-        }
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        recyclerView.adapter = itemViewAdapter
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(2))
 
         itemViewAdapter.setDataList(
             listOf(
-                HomeItem(getString(R.string.temperature), ""),
-                HomeItem(getString(R.string.pressure), ""),
-                HomeItem(getString(R.string.temperature), "15.6"),
-                HomeItem(getString(R.string.temperature), "20.0"),
+                HomeItem(R.string.temperature, "--°C", R.drawable.temp_image),
+                HomeItem(R.string.humidity, "--%", R.drawable.ic_humidity),
+                HomeItem(R.string.pressure, "-- hPa", R.drawable.ic_pressure),
+                HomeItem(R.string.air_quality, "-- AQI", R.drawable.ic_air_quality)
             )
         )
+
         startUpdatingSensorData()
     }
 
     private fun startUpdatingSensorData() {
-        Handler(Looper.getMainLooper()).post(object : Runnable {
+        handler.post(object : Runnable {
             override fun run() {
                 fetchSensorData()
-                Handler(Looper.getMainLooper()).postDelayed(this, 5000)
+                handler.postDelayed(this, 3000)
             }
         })
     }
 
     private fun fetchSensorData() {
-        val request = Request.Builder().url("http://192.168.4.1/data").build()
+        val request = Request.Builder()
+            .url("http://192.168.4.1/data")
+            .build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Handler(Looper.getMainLooper()).post {
-                    context?.let {
-                        itemViewAdapter.setDataList(
-                            listOf(
-                                HomeItem(getString(R.string.temperature), "--°C"),
-                                HomeItem(getString(R.string.pressure), "__°C"),
-                                HomeItem(getString(R.string.humidity), "--%"),
-                                HomeItem(getString(R.string.temperature), "--°C"),
-                            )
-                        )
-                    }
-
-                }
+                updateWithError()
+                handler.post { alertViewModel.clearAlerts() }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val responseData = response.body?.string()
-                Handler(Looper.getMainLooper()).post {
-                    try {
-                        val json = JSONObject(responseData ?: "{}")
-                        val temp = json.optDouble("temperature", -1.0)
-                        val hum = json.optDouble("humidity", -1.0)
+                try {
+                    val json = JSONObject(responseData ?: "{}")
+                    val temp = json.optDouble("temperature", -1.0)
+                    val hum = json.optDouble("humidity", -1.0)
+                    val pres = json.optDouble("pressure", -1.0)
+                    val airQ = json.optDouble("airQuality", -1.0)
 
-                        context?.let {
-                            itemViewAdapter.setDataList(
-                                listOf(
-                                    HomeItem(
-                                        getString(R.string.temperature),
-                                        if (temp >= 0) "$temp°C" else "--°C"
-                                    ),
-                                    HomeItem(getString(R.string.pressure), "__°C"),
-                                    HomeItem(
-                                        getString(R.string.humidity),
-                                        if (hum >= 0) "$hum%" else "--%"
-                                    ),
-                                    HomeItem(getString(R.string.temperature), "20.0"),
-                                )
+                    val temperatureStr = if (temp >= 0) "$temp°C" else "--°C"
+                    val humidityStr = if (hum >= 0) "$hum%" else "--%"
+                    val pressureStr = if (pres >= 0) "$pres hPa" else "-- hPa"
+                    val airQualityStr = if (airQ >= 0) "$airQ AQI" else "-- AQI"
+
+                    val alerts = mutableListOf<Alert>()
+
+                    if (temp >= 0) {
+                        val timestamp = (System.currentTimeMillis() / 1000f) % 86400
+                        statsViewModel.addTemperatureEntry(timestamp, temp.toFloat())
+
+                        if (temp > TEMP_HIGH) {
+                            alerts.add(
+                                Alert(R.drawable.new_temp, "Temperature Too High",
+                                    "Current temperature: $temp°C exceeds $TEMP_HIGH°C", "Just now")
                             )
-                        }
-                    } catch (e: Exception) {
-                        context?.let {
-                            itemViewAdapter.setDataList(
-                                listOf(
-                                    HomeItem(getString(R.string.temperature), "--°C"),
-                                    HomeItem(getString(R.string.pressure), "__°C"),
-                                    HomeItem(getString(R.string.humidity), "--%"),
-                                    HomeItem(getString(R.string.temperature), "--°C"),
-                                )
+                        } else if (temp < TEMP_LOW) {
+                            alerts.add(
+                                Alert(R.drawable.new_temp, "Temperature Too Low",
+                                    "Current temperature: $temp°C below $TEMP_LOW°C", "Just now")
                             )
                         }
                     }
+
+                    if (hum >= 0) {
+                        val timestamp = (System.currentTimeMillis() / 1000f) % 86400
+                        statsViewModel.addHumidityEntry(timestamp, hum.toFloat())
+
+                        if (hum > HUMIDITY_HIGH) {
+                            alerts.add(
+                                Alert(R.drawable.new_humidity, "Humidity Too High",
+                                    "Current humidity: $hum% exceeds $HUMIDITY_HIGH%", "Just now")
+                            )
+                        } else if (hum < HUMIDITY_LOW) {
+                            alerts.add(
+                                Alert(R.drawable.new_humidity, "Humidity Too Low",
+                                    "Current humidity: $hum% below $HUMIDITY_LOW%", "Just now")
+                            )
+                        }
+                    }
+
+                    if (pres >= 0) {
+                        val timestamp = (System.currentTimeMillis() / 1000f) % 86400
+                        statsViewModel.addPressureEntry(timestamp, pres.toFloat())
+
+                        if (pres > PRESSURE_HIGH) {
+                            alerts.add(
+                                Alert(R.drawable.new_pressure, "Pressure Too High",
+                                    "Current pressure: $pres hPa exceeds $PRESSURE_HIGH hPa", "Just now")
+                            )
+                        } else if (pres < PRESSURE_LOW) {
+                            alerts.add(
+                                Alert(R.drawable.new_pressure, "Pressure Too Low",
+                                    "Current pressure: $pres hPa below $PRESSURE_LOW hPa", "Just now")
+                            )
+                        }
+                    }
+
+                    if (airQ >= 0 && airQ > AIR_QUALITY_HIGH) {
+                        alerts.add(
+                            Alert(R.drawable.new_humidity, "Poor Air Quality",
+                                "Air Quality Index: $airQ exceeds $AIR_QUALITY_HIGH", "Just now")
+                        )
+                    }
+
+                    for (alert in alerts) {
+                        handler.post {
+                            alertViewModel.addAlertWithTimeout(alert)
+                        }
+                    }
+
+                    handler.post {
+                        itemViewAdapter.setDataList(
+                            listOf(
+                                HomeItem(R.string.temperature, temperatureStr, R.drawable.temp_image),
+                                HomeItem(R.string.humidity, humidityStr, R.drawable.ic_humidity),
+                                HomeItem(R.string.pressure, pressureStr, R.drawable.ic_pressure),
+                                HomeItem(R.string.air_quality, airQualityStr, R.drawable.ic_air_quality)
+                            )
+                        )
+                    }
+                } catch (e: Exception) {
+                    updateWithError()
+                    handler.post { alertViewModel.clearAlerts() }
                 }
             }
         })
     }
 
-    class GridSpacingItemDecoration(
-        private val spanCount: Int
-    ) : RecyclerView.ItemDecoration() {
+    private fun updateWithError() {
+        handler.post {
+            itemViewAdapter.setDataList(
+                listOf(
+                    HomeItem(R.string.temperature, "--°C", R.drawable.temp_image),
+                    HomeItem(R.string.humidity, "--%", R.drawable.ic_humidity),
+                    HomeItem(R.string.pressure, "-- hPa", R.drawable.ic_pressure),
+                    HomeItem(R.string.air_quality, "-- AQI", R.drawable.ic_air_quality)
+                )
+            )
+        }
+    }
 
-        val spacing = 40
+    class GridSpacingItemDecoration(private val spanCount: Int) :
+        androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
+        private val spacing = 40
         override fun getItemOffsets(
             outRect: Rect, view: View,
-            parent: RecyclerView, state: RecyclerView.State
+            parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State
         ) {
             val position = parent.getChildAdapterPosition(view)
             val column = position % spanCount
-
             outRect.left = column * spacing / spanCount
             outRect.right = spacing - (column + 1) * spacing / spanCount
             if (position >= spanCount) {
-                outRect.top = spacing // item top
+                outRect.top = spacing
             }
-
         }
     }
 
     companion object {
+        private const val TEMP_HIGH = 30.0
+        private const val TEMP_LOW = 15.0
+        private const val HUMIDITY_HIGH = 70.0
+        private const val HUMIDITY_LOW = 30.0
+        private const val PRESSURE_HIGH = 1030.0
+        private const val PRESSURE_LOW = 980.0
+        private const val AIR_QUALITY_HIGH = 100.0
 
         @JvmStatic
-        fun newInstance() =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = HomeFragment()
     }
 }

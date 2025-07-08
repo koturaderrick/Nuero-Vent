@@ -38,123 +38,16 @@
             app:tint="@color/white" />
     </RelativeLayout>
 
-    <!-- Middle content in a scroll view -->
-    <ScrollView
+
+    <LinearLayout
+        android:id="@+id/optionsContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
 
-            <!-- Item Row 1 -->
-            <LinearLayout
-                android:id="@+id/AuditChecklist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/File"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="file"
-                    android:src="@drawable/file" />
-                <!--android:src="@drawable/ic_logo" -->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="Audit checklist Form"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Item Row 2 -->
-            <LinearLayout
-                android:id="@+id/logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Logo"
-                    android:src="@drawable/log_out" />
-                <!--android:src="@drawable/ic_logo" -->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Log Out"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Logo"
-                    android:src="@drawable/tools" />
-                <!--android:src="@drawable/ic_logo"-->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Request Maintenance"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/reboot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Logo"
-                    android:src="@drawable/reboot" />
-                <!--android:src="@drawable/ic_logo" -->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="Reboot System"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+    <!-- Middle content in a scroll view -->
 
 
 </LinearLayout>

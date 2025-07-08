@@ -3,10 +3,13 @@ package com.nuerovent.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.nuerovent.ui.dashboard.AlertsFragment
 import com.nuerovent.ui.dashboard.ControlFragment
 import com.nuerovent.ui.dashboard.HomeFragment
 import com.nuerovent.ui.dashboard.StatsFragment
+import com.nuerovent.ui.dashboard.AlertsFragment
+
+
+
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
@@ -22,3 +25,5 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
         }
     }
 }
+
+

@@ -22,6 +22,7 @@
     <string name="temperature_exceeded_threshold">Temperature exceeded threshold</string>
     <string name="_2h_ago">2h ago</string>
     <string name="menu">Menu</string>
+    <string name="air_quality">Air Quality</string>
     <string name="temperature">Temperature</string>
     <string name="logout">LOGOUT</string>
     <string name="option_image">option_image</string>

@@ -1,12 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="80dp"
     android:layout_marginBottom="4dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="12dp">
 
     <ImageView
+        android:id="@+id/icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginEnd="12dp"
@@ -21,6 +22,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/unstable_pressure"
@@ -28,6 +30,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pressure_fluctuations_detected"
@@ -36,6 +39,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/timeAgo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_4h_ago"
