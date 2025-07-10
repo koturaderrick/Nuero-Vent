@@ -141,7 +141,8 @@ class HomeFragment : Fragment() {
                     }
 
                     if (airQ >= 0) {
-                        statsViewModel.updateAirQuality(airQ.toFloat())
+                        statsViewModel.addAirQualityEntry(timestamp, airQ.toFloat())
+
                         if (airQ > AIR_QUALITY_HIGH) {
                             alerts.add(Alert(R.drawable.new_humidity, "Poor Air Quality",
                                 "Air Quality Index: $airQ exceeds $AIR_QUALITY_HIGH", "Just now"))

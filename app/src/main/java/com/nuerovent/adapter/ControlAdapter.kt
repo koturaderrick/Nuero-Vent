@@ -2,7 +2,6 @@ package com.nuerovent.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.nuerovent.databinding.ItemControlBinding
 import com.nuerovent.model.ControlItem
@@ -16,14 +15,17 @@ class ControlAdapter(
         fun bind(item: ControlItem) {
             binding.controlLabel.text = item.label
             binding.controlSubText.text = item.subText
+
+            // Temporarily remove listener to avoid triggering on recycling
+            binding.controlSwitch.setOnCheckedChangeListener(null)
             binding.controlSwitch.isChecked = item.isChecked
 
-            // switch
+            // Re-attach listener
             binding.controlSwitch.setOnCheckedChangeListener { _, isChecked ->
-                onToggle(adapterPosition, isChecked)
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onToggle(adapterPosition, isChecked)
+                }
             }
-
-
         }
     }
 

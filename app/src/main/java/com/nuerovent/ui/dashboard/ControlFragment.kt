@@ -23,20 +23,18 @@ class ControlFragment : Fragment() {
     private lateinit var adapter: ControlAdapter
     private val client = OkHttpClient()
 
-    // Control items for first RecyclerView
     private val controlItems = mutableListOf(
-        ControlItem("Inductor Fan", false, "Auto mode"),
+        ControlItem("Control Mode", false, " Manual / Auto"),
         ControlItem("Extractor Fan", false, "Manual mode"),
         ControlItem("Humidifier", false, "Active"),
         ControlItem("Heating Unit", false, "Scheduled"),
         ControlItem("Cooling Unit", false, "Idle")
     )
 
-    // Default condition items for second RecyclerView (make mutable to update)
     private val defaultConditions = mutableListOf(
         DefaultConditionItem("Target Temperature", "22°C"),
         DefaultConditionItem("Target Humidity", "50%"),
-        DefaultConditionItem("Target Pressure", "Neutral"),
+        DefaultConditionItem("Target Pressure", "1013hPa"),
         DefaultConditionItem("Air Quality Threshold", "Low")
     )
 
@@ -45,35 +43,30 @@ class ControlFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentControlBinding.inflate(inflater, container, false)
-
-        setupRecyclerViews() // initialize both RecyclerViews here
-
+        setupRecyclerViews()
         return binding.root
     }
 
     private fun setupRecyclerViews() {
-        // Setup first RecyclerView (controls)
         adapter = ControlAdapter(controlItems) { position, isChecked ->
             controlItems[position].isChecked = isChecked
-
-            // If the control is one of the fans, send the toggle command to ESP
             when (controlItems[position].label) {
-                "Inductor Fan" -> toggleFan(isChecked)
-                "Extractor Fan" -> toggleFan(isChecked)
-                // Add more controls here if you wire more relays
+                "Control Mode" -> toggleControlMode(isChecked)
+                "Extractor Fan" -> toggleFan(position, isChecked)
             }
         }
+
         binding.controlRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.controlRecyclerView.adapter = adapter
 
-        // Setup second RecyclerView (default conditions) with popup menu callback
         val defaultAdapter = DefaultConditionAdapter(defaultConditions) { position, action ->
             when (action) {
                 "set_temp" -> showInputDialog(position, "Set Temperature", "°C")
                 "set_humidity" -> showInputDialog(position, "Set Humidity", "%")
-                "set_pressure" -> showInputDialog(position, "Set Pressure", "")
+                "set_pressure" -> showInputDialog(position, "Set Pressure", "hPa")
             }
         }
+
         binding.defaultConditionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.defaultConditionRecyclerView.adapter = defaultAdapter
     }
@@ -91,9 +84,12 @@ class ControlFragment : Fragment() {
             .setPositiveButton("Save") { dialog, _ ->
                 val newValue = input.text.toString().trim()
                 if (newValue.isNotEmpty()) {
-                    defaultConditions[position] =
-                        DefaultConditionItem(defaultConditions[position].title, "$newValue$unit")
+                    defaultConditions[position] = DefaultConditionItem(
+                        defaultConditions[position].title,
+                        "$newValue$unit"
+                    )
                     binding.defaultConditionRecyclerView.adapter?.notifyItemChanged(position)
+                    pushUpdatedConditionsToESP()  // Update ESP32 with new values
                 }
                 dialog.dismiss()
             }
@@ -101,14 +97,57 @@ class ControlFragment : Fragment() {
             .show()
     }
 
-    private fun toggleFan(turnOn: Boolean) {
-        val espIp = "192.168.4.1"  //
-        val url = "http://$espIp/fan?state=${if (turnOn) "on" else "off"}"
+    private fun pushUpdatedConditionsToESP() {
+        val espIp = "192.168.4.1"
 
+        val temp = defaultConditions[0].subtext.filter { it.isDigit() || it == '.' }
+        val hum = defaultConditions[1].subtext.filter { it.isDigit() || it == '.' }
+        val pres = defaultConditions[2].subtext.filter { it.isDigit() || it == '.' }
+
+
+        val url = "http://$espIp/set_conditions?temp=$temp&humidity=$hum&pressure=$pres"
         val request = Request.Builder().url(url).build()
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                // Optionally handle failure (e.g., show a toast)
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.close()
+            }
+        })
+    }
+
+    private fun toggleControlMode(isAuto: Boolean) {
+        val espIp = "192.168.4.1"
+        val mode = if (isAuto) "auto" else "manual"
+        val url = "http://$espIp/mode?type=$mode"
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.close()
+            }
+        })
+    }
+
+    private fun toggleFan(position: Int, turnOn: Boolean) {
+        val espIp = "192.168.4.1"
+        val endpoint = when (controlItems[position].label) {
+            "Extractor Fan" -> "fan2"
+            else -> return
+        }
+
+        val url = "http://$espIp/$endpoint?state=${if (turnOn) "on" else "off"}"
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
 

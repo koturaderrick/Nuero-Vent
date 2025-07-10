@@ -37,6 +37,7 @@ class StatsFragment : Fragment() {
         setupChart(binding.lineChartTemp, emptyList(), "Temperature (°C)", Color.RED, 15f, 35f)
         setupChart(binding.lineChartHumidity, emptyList(), "Humidity (%)", Color.BLUE, 20f, 100f)
         setupChart(binding.lineChartPressure, emptyList(), "Pressure (hPa)", Color.MAGENTA, 970f, 1050f)
+        setupChart(binding.lineChartAirQuality, emptyList(), "Air Quality Index", Color.GREEN, 0f, 200f) // Added AQ chart
     }
 
     private fun observeData() {
@@ -50,6 +51,10 @@ class StatsFragment : Fragment() {
 
         statsViewModel.pressureEntries.observe(viewLifecycleOwner) { entries ->
             updateChart(binding.lineChartPressure, entries)
+        }
+
+        statsViewModel.airQualityEntries.observe(viewLifecycleOwner) { entries ->  // Observe air quality entries
+            updateChart(binding.lineChartAirQuality, entries)
         }
     }
 
@@ -80,6 +85,7 @@ class StatsFragment : Fragment() {
             binding.lineChartTemp -> Color.RED
             binding.lineChartHumidity -> Color.BLUE
             binding.lineChartPressure -> Color.MAGENTA
+            binding.lineChartAirQuality -> Color.GREEN // Added AQ color
             else -> Color.BLACK
         }
     }

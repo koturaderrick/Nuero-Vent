@@ -3,12 +3,14 @@ package com.nuerovent.model
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.github.mikephil.charting.data.Entry
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class StatsViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val auditDao = AppDatabase.getDatabase(application).auditDao()
 
     private val _temperatureEntries = MutableLiveData<MutableList<Entry>>(mutableListOf())
     val temperatureEntries: LiveData<MutableList<Entry>> = _temperatureEntries
@@ -18,6 +20,9 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _pressureEntries = MutableLiveData<MutableList<Entry>>(mutableListOf())
     val pressureEntries: LiveData<MutableList<Entry>> = _pressureEntries
+
+    private val _airQualityEntries = MutableLiveData<MutableList<Entry>>(mutableListOf())
+    val airQualityEntries: LiveData<MutableList<Entry>> = _airQualityEntries
 
     private val _latestTemperature = MutableLiveData<Float?>()
     val latestTemperature: LiveData<Float?> = _latestTemperature
@@ -31,8 +36,8 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     private val _latestAirQuality = MutableLiveData<Float?>()
     val latestAirQuality: LiveData<Float?> = _latestAirQuality
 
-    private val _auditEntries = MutableLiveData<MutableList<AuditEntry>>(mutableListOf())
-    val auditEntries: LiveData<MutableList<AuditEntry>> = _auditEntries
+    // LiveData from Room database for audit entries
+    val auditEntries: LiveData<List<AuditEntry>> = auditDao.getAllAudits()
 
     private var auditTempSum = 0f
     private var auditHumiditySum = 0f
@@ -64,6 +69,13 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         _latestPressure.postValue(value)
     }
 
+    fun addAirQualityEntry(time: Float, value: Float) {
+        val list = _airQualityEntries.value ?: mutableListOf()
+        list.add(Entry(time, value))
+        _airQualityEntries.postValue(list)
+        _latestAirQuality.postValue(value)
+    }
+
     fun updateAirQuality(value: Float) {
         _latestAirQuality.postValue(value)
     }
@@ -92,9 +104,10 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
             avgAirQuality = avgAirQuality
         )
 
-        val updatedList = _auditEntries.value ?: mutableListOf()
-        updatedList.add(auditEntry)
-        _auditEntries.postValue(updatedList)
+        // Correct insert function call here
+        viewModelScope.launch(Dispatchers.IO) {
+            auditDao.insertAudit(auditEntry)
+        }
 
         auditTempSum = 0f
         auditHumiditySum = 0f
@@ -110,21 +123,21 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         auditTimerRunnable = object : Runnable {
             override fun run() {
                 finalizeAudit()
-                auditTimerHandler?.postDelayed(this, 3 * 1000) // 3 seconds
+                auditTimerHandler?.postDelayed(this, 3 * 1000) // every 3 seconds
             }
         }
-        auditTimerHandler?.postDelayed(auditTimerRunnable!!, 3 * 1000) // initial 3 seconds delay
+        auditTimerHandler?.postDelayed(auditTimerRunnable!!, 3 * 1000)
     }
-
 
     fun clearAllData() {
         _temperatureEntries.postValue(mutableListOf())
         _humidityEntries.postValue(mutableListOf())
         _pressureEntries.postValue(mutableListOf())
+        _airQualityEntries.postValue(mutableListOf())
         _latestTemperature.postValue(null)
         _latestHumidity.postValue(null)
         _latestPressure.postValue(null)
         _latestAirQuality.postValue(null)
-        _auditEntries.postValue(mutableListOf())
+        // auditEntries come from DB, no need to clear here
     }
 }
