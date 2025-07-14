@@ -96,17 +96,20 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         val avgPressure = auditPressureSum / auditSampleCount
         val avgAirQuality = auditAirQualitySum / auditSampleCount
 
+        val now = System.currentTimeMillis()
+        val cutoffTime = now - (30 * 60 * 1000) // 30 minutes ago
+
         val auditEntry = AuditEntry(
-            timestamp = System.currentTimeMillis(),
+            timestamp = now,
             avgTemperature = avgTemp,
             avgHumidity = avgHumidity,
             avgPressure = avgPressure,
             avgAirQuality = avgAirQuality
         )
 
-        // Correct insert function call here
         viewModelScope.launch(Dispatchers.IO) {
             auditDao.insertAudit(auditEntry)
+            auditDao.deleteOlderThan(cutoffTime)
         }
 
         auditTempSum = 0f

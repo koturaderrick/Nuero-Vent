@@ -3,6 +3,7 @@ package com.nuerovent.model
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+
 @Dao
 interface AuditDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -13,4 +14,8 @@ interface AuditDao {
 
     @Query("DELETE FROM audit_table")
     suspend fun clearAllAudits()
+
+    @Query("DELETE FROM audit_table WHERE timestamp < :cutoffTime")
+    suspend fun deleteOlderThan(cutoffTime: Long)
 }
+
