@@ -24,9 +24,8 @@ class ControlFragment : Fragment() {
     private val client = OkHttpClient()
 
     private val controlItems = mutableListOf(
-        ControlItem("Control Mode", false, " Manual / Auto"),
+        ControlItem("Control Mode", false, " Auto / Manual"),
         ControlItem("Extractor Fan", false, "Manual mode"),
-        ControlItem("Humidifier", false, "Active"),
         ControlItem("Heating Unit", false, "Scheduled"),
         ControlItem("Cooling Unit", false, "Idle")
     )
@@ -52,7 +51,9 @@ class ControlFragment : Fragment() {
             controlItems[position].isChecked = isChecked
             when (controlItems[position].label) {
                 "Control Mode" -> toggleControlMode(isChecked)
-                "Extractor Fan" -> toggleFan(position, isChecked)
+                "Extractor Fan" -> if (controlItems[0].isChecked) toggleFan(isChecked) else resetToggle(position)
+                "Heating Unit" -> if (controlItems[0].isChecked) toggleHeating(isChecked) else resetToggle(position)
+                "Cooling Unit" -> if (controlItems[0].isChecked) toggleCooling(isChecked) else resetToggle(position)
             }
         }
 
@@ -69,6 +70,14 @@ class ControlFragment : Fragment() {
 
         binding.defaultConditionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.defaultConditionRecyclerView.adapter = defaultAdapter
+    }
+
+    private fun resetToggle(position: Int) {
+        requireActivity().runOnUiThread {
+            // If manual mode is off, prevent toggling individual devices by resetting UI switch to false
+            controlItems[position].isChecked = false
+            adapter.notifyItemChanged(position)
+        }
     }
 
     private fun showInputDialog(position: Int, title: String, unit: String) {
@@ -89,7 +98,7 @@ class ControlFragment : Fragment() {
                         "$newValue$unit"
                     )
                     binding.defaultConditionRecyclerView.adapter?.notifyItemChanged(position)
-                    pushUpdatedConditionsToESP()  // Update ESP32 with new values
+                    pushUpdatedConditionsToESP()
                 }
                 dialog.dismiss()
             }
@@ -103,7 +112,6 @@ class ControlFragment : Fragment() {
         val temp = defaultConditions[0].subtext.filter { it.isDigit() || it == '.' }
         val hum = defaultConditions[1].subtext.filter { it.isDigit() || it == '.' }
         val pres = defaultConditions[2].subtext.filter { it.isDigit() || it == '.' }
-
 
         val url = "http://$espIp/set_conditions?temp=$temp&humidity=$hum&pressure=$pres"
         val request = Request.Builder().url(url).build()
@@ -119,9 +127,9 @@ class ControlFragment : Fragment() {
         })
     }
 
-    private fun toggleControlMode(isAuto: Boolean) {
+    private fun toggleControlMode(isManual: Boolean) {
         val espIp = "192.168.4.1"
-        val mode = if (isAuto) "auto" else "manual"
+        val mode = if (isManual) "manual" else "auto"
         val url = "http://$espIp/mode?type=$mode"
         val request = Request.Builder().url(url).build()
 
@@ -132,28 +140,73 @@ class ControlFragment : Fragment() {
 
             override fun onResponse(call: Call, response: Response) {
                 response.close()
+                requireActivity().runOnUiThread {
+                    if (isManual) {
+                        // Turn OFF all devices on manual mode activation
+                        turnOffAllDevices()
+                    } else {
+                        // Reset all device toggles off when auto mode is enabled
+                        resetAllDeviceToggles()
+                    }
+                }
             }
         })
     }
 
-    private fun toggleFan(position: Int, turnOn: Boolean) {
+    private fun turnOffAllDevices() {
         val espIp = "192.168.4.1"
-        val endpoint = when (controlItems[position].label) {
-            "Extractor Fan" -> "fan2"
-            else -> return
+        val urls = listOf(
+            "http://$espIp/fan2?state=off",
+            "http://$espIp/heater?state=off",
+            "http://$espIp/cooler?state=off"
+        )
+        for (url in urls) {
+            val request = Request.Builder().url(url).build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) = e.printStackTrace()
+                override fun onResponse(call: Call, response: Response) = response.close()
+            })
         }
+        // Reset UI toggles for devices to off on UI thread
+        requireActivity().runOnUiThread {
+            resetAllDeviceToggles()
+        }
+    }
 
-        val url = "http://$espIp/$endpoint?state=${if (turnOn) "on" else "off"}"
+    private fun resetAllDeviceToggles() {
+        controlItems[1].isChecked = false // Extractor Fan
+        controlItems[2].isChecked = false // Heating Unit
+        controlItems[3].isChecked = false // Cooling Unit
+        adapter.notifyItemRangeChanged(1, 3)
+    }
+
+    private fun toggleFan(turnOn: Boolean) {
+        val espIp = "192.168.4.1"
+        val url = "http://$espIp/fan2?state=${if (turnOn) "on" else "off"}"
         val request = Request.Builder().url(url).build()
-
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
+            override fun onFailure(call: Call, e: IOException) = e.printStackTrace()
+            override fun onResponse(call: Call, response: Response) = response.close()
+        })
+    }
 
-            override fun onResponse(call: Call, response: Response) {
-                response.close()
-            }
+    private fun toggleHeating(turnOn: Boolean) {
+        val espIp = "192.168.4.1"
+        val url = "http://$espIp/heater?state=${if (turnOn) "on" else "off"}"
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) = e.printStackTrace()
+            override fun onResponse(call: Call, response: Response) = response.close()
+        })
+    }
+
+    private fun toggleCooling(turnOn: Boolean) {
+        val espIp = "192.168.4.1"
+        val url = "http://$espIp/cooler?state=${if (turnOn) "on" else "off"}"
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) = e.printStackTrace()
+            override fun onResponse(call: Call, response: Response) = response.close()
         })
     }
 

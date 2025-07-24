@@ -34,7 +34,6 @@ class AuditActivity : AppCompatActivity() {
         statsViewModel.auditEntries.observe(this) { entries ->
             binding.auditTable.removeAllViews()
 
-            // Add header row
             val headerRow = LayoutInflater.from(this).inflate(
                 com.nuerovent.R.layout.item_audit_row,
                 binding.auditTable,

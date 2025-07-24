@@ -16,11 +16,11 @@ class ControlAdapter(
             binding.controlLabel.text = item.label
             binding.controlSubText.text = item.subText
 
-            // Temporarily remove listener to avoid triggering on recycling
+
             binding.controlSwitch.setOnCheckedChangeListener(null)
             binding.controlSwitch.isChecked = item.isChecked
 
-            // Re-attach listener
+
             binding.controlSwitch.setOnCheckedChangeListener { _, isChecked ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     onToggle(adapterPosition, isChecked)

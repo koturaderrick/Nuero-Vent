@@ -16,7 +16,7 @@ class DefaultConditionAdapter(
             binding.titleText.text = item.title
             binding.subText.text = item.subtext
 
-            // Direct click on entire item instead of showing popup
+
             binding.root.setOnClickListener {
                 when (item.title) {
                     "Target Temperature" -> onMenuAction(adapterPosition, "set_temp")
@@ -26,7 +26,7 @@ class DefaultConditionAdapter(
                 }
             }
 
-            // Optional: disable the moreIcon or hide it entirely
+
             binding.moreIcon.setOnClickListener(null)
             binding.moreIcon.visibility = android.view.View.GONE
         }
